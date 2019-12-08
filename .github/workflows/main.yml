@@ -1,0 +1,33 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: build
+        run: go build -o run *.go
+      - name: collect artifacts
+        run: |
+          mkdir artifacts
+          mv run config_prod.json artifacts
+      - name: deploy
+        uses: noobly314/actions/rsync@master
+        env:
+          SERVER: ${{ secrets.SERVER_IP }}
+          USERNAME: root
+          KEY: ${{ secrets.PRIVATE_KEY }}
+          SRC: ./artifacts/
+          DEST: /var/www/simple-http-proxy
+      - name: restart service
+        uses: noobly314/actions/exec@master
+        env:
+          SERVER: ${{ secrets.SERVER_IP }}
+          USERNAME: root
+          KEY: ${{ secrets.PRIVATE_KEY }}
+          COMMAND: systemctl restart simple-http-proxy
