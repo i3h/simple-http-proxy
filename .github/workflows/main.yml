@@ -16,7 +16,7 @@ jobs:
       - name: collect artifacts
         run: |
           mkdir artifacts
-          mv run config_prod.json artifacts
+          mv run config.json artifacts
       - name: deploy
         uses: noobly314/actions/rsync@master
         env:
