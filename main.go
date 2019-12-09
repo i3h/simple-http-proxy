@@ -1,12 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"net"
 )
 
 func init() {
 	init_flag()
+	init_log()
 }
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 	l, err := net.Listen(CONN_TYPE, CONN_HOST+":"+CONN_PORT)
 	check(err)
 	defer l.Close()
-	fmt.Println("Listening on " + CONN_HOST + ":" + CONN_PORT)
+	Log.Info("Listening on " + CONN_HOST + ":" + CONN_PORT)
 
 	for {
 		conn, err := l.Accept()
