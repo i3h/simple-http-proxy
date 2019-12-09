@@ -1,5 +1,5 @@
 {
-  "proxy_type": "http",
+  "proxy_type": "socks5",
   "listen_addr": "0.0.0.0",
   "listen_port": 3333
 }

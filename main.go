@@ -20,6 +20,10 @@ func main() {
 	for {
 		client, err := l.Accept()
 		check(err)
-		go handleConnection(client)
+		if PROXY_TYPE == "http" {
+			go handleHTTPConnection(client)
+		} else if PROXY_TYPE == "socks5" {
+			go handleSOCKS5Connection(client)
+		}
 	}
 }
