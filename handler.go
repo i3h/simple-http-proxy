@@ -71,9 +71,11 @@ func handleSOCKS5Connection(client net.Conn) {
 		}
 		port = strconv.Itoa(int(b[n-2])<<8 | int(b[n-1]))
 
-		server, err := net.Dial("tcp", net.JoinHostPort(host, port))
+		address := net.JoinHostPort(host, port)
+		Log.Info("CON", "    ", address)
+		server, err := net.Dial("tcp", address)
 		if err != nil {
-			Log.Warn(err)
+			Log.Warn("ERR", "    ", address)
 			return
 		}
 		defer server.Close()
