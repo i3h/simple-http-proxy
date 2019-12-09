@@ -1,9 +1,13 @@
 package main
 
-import "fmt"
-
 func check(err error) {
 	if err != nil {
-		fmt.Println(err)
+		Log.Warn(err)
+	}
+}
+
+func pin(err error, msg string) {
+	if err != nil {
+		Log.Warn(msg)
 	}
 }

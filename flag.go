@@ -8,27 +8,27 @@ import (
 )
 
 type ConfigData struct {
-	Server string `json:"server"`
-	Port   int    `json:"port"`
-	Type   string `json:"type"`
+	Proxy_Type  string `json:"proxy_type"`
+	Listen_Addr string `json:"listen_addr"`
+	Listen_Port int    `json:"listen_port"`
 }
 
 var Config ConfigData
 
-var CONN_HOST string
-var CONN_PORT string
-var CONN_TYPE string
+var PROXY_TYPE string
+var LISTEN_ADDR string
+var LISTEN_PORT string
 
 func init_flag() {
 	// Read config.json
-	file := flag.String("c", "config.json", "Location of the config file.")
+	file := flag.String("c", "config_test.json", "Location of the config file.")
 	flag.Parse()
 	jsonData, err := ioutil.ReadFile(*file)
 	check(err)
 	err = json.Unmarshal(jsonData, &Config)
 	check(err)
 	// Rename
-	CONN_HOST = Config.Server
-	CONN_PORT = strconv.Itoa(Config.Port)
-	CONN_TYPE = Config.Type
+	PROXY_TYPE = Config.Proxy_Type
+	LISTEN_ADDR = Config.Listen_Addr
+	LISTEN_PORT = strconv.Itoa(Config.Listen_Port)
 }

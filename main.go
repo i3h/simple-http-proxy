@@ -11,14 +11,15 @@ func init() {
 
 func main() {
 	// listen
-	l, err := net.Listen(CONN_TYPE, CONN_HOST+":"+CONN_PORT)
+	l, err := net.Listen("tcp", LISTEN_ADDR+":"+LISTEN_PORT)
 	check(err)
 	defer l.Close()
-	Log.Info("Listening on " + CONN_HOST + ":" + CONN_PORT)
+	Log.Info("Listening on " + LISTEN_ADDR + ":" + LISTEN_PORT)
 
+	// accept
 	for {
-		conn, err := l.Accept()
+		client, err := l.Accept()
 		check(err)
-		go handleConnection(conn)
+		go handleConnection(client)
 	}
 }
